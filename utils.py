@@ -6,6 +6,7 @@ from PIL import Image, ImageFont, ImageOps, ImageDraw
 from kitchen.text.converters import to_unicode, to_bytes
 import textwrap
 from KEYS import *
+from ttp import ttp
 
 def auth_step1():
     auth = tweepy.OAuthHandler(consumer_token, consumer_secret)
@@ -62,16 +63,16 @@ def imagify(text,fn='temp.png'):
     font = ImageFont.truetype(font_path, 18, encoding='unic')
     # font=ImageFont.load_default()
     text = to_bytes(text)
-    (width, height) = font.getsize(text[0])
+    # (width, height) = font.getsize(text[0])
     orilines=text.split('\n')
-    print orilines
+    # print orilines
     lines = list(flatten([textwrap.wrap(oriline, width=80) if oriline else '    ' for oriline in orilines]))
     widths,heights=zip(*[font.getsize(line) if line else font.getsize('A') for line in lines ])
-    print widths,heights
-    print lines
+    # print widths,heights
+    # print lines
     h=sum(heights)+6*len(lines)
     w=max(widths) +30
-    print h,w
+    # print h,w
     bg=Image.new('RGBA',(w,h), "#FFFFFF")
     draw = ImageDraw.Draw(bg)
     y_text = 10
@@ -88,27 +89,14 @@ def imagify(text,fn='temp.png'):
         bg.save(f)
     return fn
 
+parser=ttp.Parser()
+def get_tweet_components(text):
+    result=parser.parse(text)
+    urls=' '.join(result.urls)
+    tags=' '.join(['#'+tag for tag in result.tags])
+    users=' '.join(['@'+user for user in result.users])
+    return '{} {} {}'.format(users,urls,tags)
 
-# def imagify(text,fn='temp.png'):
-#     FOREGROUND = (0, 0, 0)
-#     WIDTH = 375
-#     HEIGHT = 50
-#     font_path = 'Times_New_Roman.ttf'
-#     font = ImageFont.truetype(font_path, 18, encoding='unic')
-#     # font=ImageFont.load_default()
-#     text = to_bytes(text)
-#     (width, height) = font.getsize(text[0])
 
-#     lines = textwrap.wrap(text, width=80)
-#     h=(height+10)*len(lines)+30
-#     w=(width+5)*40
-#     print h,w
-#     bg=Image.new('RGBA',(w,h), "#FFFFFF")
-#     draw = ImageDraw.Draw(bg)
-#     y_text = 10
-#     for line in lines:
-#         width, height = font.getsize(line)
-#         draw.text(((w - width) / 2, y_text), line, font=font, fill=FOREGROUND)
-#         y_text += height+5
 
-#     # bg.show()
+

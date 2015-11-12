@@ -44,16 +44,23 @@ class Browser(QWebView):
 class MyWindow(QtGui.QWidget):
     def __init__(self, parent=None):
         super(MyWindow, self).__init__(parent)
+        
         self.textbox=QtGui.QTextEdit(self)
+        self.textbox.textChanged.connect(self.update_char_count) 
+
         self.count_display = QtGui.QLabel(self)
         self.count_display.setAlignment(Qt.AlignCenter)
-        self.textbox.textChanged.connect(self.update_char_count) 
+        
+        self.status_display=QtGui.QLabel(self)
+        
         self.tweetbutton=QtGui.QPushButton('Tweet!',self)
         self.tweetbutton.clicked.connect(self.send_tweet)
+        
         self.layout = QtGui.QVBoxLayout(self)
         self.layout.addWidget(self.textbox)
         self.layout.addWidget(self.count_display)
         self.layout.addWidget(self.tweetbutton)
+        self.layout.addWidget(self.status_display)
         self.browser=MyDialog(self)
         self.twitter=check_stored_tokens()
         if not self.twitter:
@@ -67,9 +74,10 @@ class MyWindow(QtGui.QWidget):
         if len(text)<140:
             r=self.twitter.update_status(status=text)
         else:
+            status_text=get_tweet_components(text)
             fn=imagify(text)
             media=self.twitter.media_upload(fn)
-            r=self.twitter.update_status(media_ids=[media.media_id_string])
+            r=self.twitter.update_status(status=status_text,media_ids=[media.media_id_string])
         print r
         self.textbox.clear()
 
