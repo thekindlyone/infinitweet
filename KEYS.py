@@ -1,0 +1,2 @@
+consumer_token='Z7UQYQV3Zq0BFKnYpi5gfU6uC'
+consumer_secret='GNQyMuVGsrttXPrueCtB7UNvvdiGQ3edAq9w24yOXJYQVeF29g'
