@@ -1,0 +1,6 @@
+*.pyc
+*.ipynb
+*.jpg
+*.png
+*.json
+/env
