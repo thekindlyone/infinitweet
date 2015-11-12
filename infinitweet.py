@@ -52,6 +52,7 @@ class MyWindow(QtGui.QWidget):
         self.count_display.setAlignment(Qt.AlignCenter)
         
         self.status_display=QtGui.QLabel(self)
+        self.status_display.setOpenExternalLinks(True)
         
         self.tweetbutton=QtGui.QPushButton('Tweet!',self)
         self.tweetbutton.clicked.connect(self.send_tweet)
@@ -70,7 +71,7 @@ class MyWindow(QtGui.QWidget):
 
     @QtCore.pyqtSlot()
     def send_tweet(self):
-        text= self.textbox.toPlainText()
+        text= str(self.textbox.toPlainText())
         if len(text)<140:
             r=self.twitter.update_status(status=text)
         else:
@@ -78,8 +79,11 @@ class MyWindow(QtGui.QWidget):
             fn=imagify(text)
             media=self.twitter.media_upload(fn)
             r=self.twitter.update_status(status=status_text,media_ids=[media.media_id_string])
-        print r
+
+        template='https://twitter.com/{}/status/{}'.format
+        url='<a href="{}">Tweeted Succesfully</a>'.format(template(r.user.screen_name,r.id_str))
         self.textbox.clear()
+        self.status_display.setText(url)
 
     @QtCore.pyqtSlot()
     def update_char_count(self):
