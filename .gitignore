@@ -4,3 +4,4 @@
 *.png
 *.json
 /env
+KEYS.py
