@@ -1,5 +1,9 @@
 # Sends tweets > 140 chars. No more sms lingo.
 
+![Screencast](https://i.imgur.com/rJANurN.gif)
+
+
+
 
 Requirements:
 qt, pyqt, tweepy, requests==2.7, Pillow
