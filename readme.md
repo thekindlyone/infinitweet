@@ -1,6 +1,6 @@
 # Sends tweets > 140 chars. No more sms lingo.
 
-![Screencast](https://i.imgur.com/rJANurN.gif)
+
 
 
 
