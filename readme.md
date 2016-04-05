@@ -10,7 +10,7 @@ qt, pyqt, tweepy, requests==2.7, Pillow
 
 Needs a file called KEYS.py to store app credentials (get them from [here](https://apps.twitter.com/)  )
 
-Format of Keys.py
+Format of KEYS.py
 
         consumer_token=<your token>
         consumer_secret=<your app secret>
