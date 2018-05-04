@@ -3,7 +3,7 @@
 
 
 
-
+Demo: https://www.youtube.com/watch?v=-ZPNsWltBPk
 
 Requirements:
 qt, pyqt, tweepy, requests==2.7, Pillow
